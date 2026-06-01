@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AO Globe Life | Recruiting CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05101f;
+  --bg2: #091929;
+  --bg3: #0d2238;
+  --card: #0a1e33;
+  --card2: #0f2740;
+  --border: #1a3a5c;
+  --border2: #254e78;
+  --gold: #c9a43e;
+  --gold2: #e2c46a;
+  --gold3: #f0d88a;
+  --gold-dim: rgba(201,164,62,0.15);
+  --blue: #1a5fb0;
+  --blue2: #2272d4;
+  --text: #dce8f5;
+  --text2: #8aabcc;
+  --text3: #4d7a9e;
+  --success: #2dd49a;
+  --warning: #f0a500;
+  --danger: #e8485a;
+  --purple: #9b6fd4;
+  --stage1: #4a90d9;
+  --stage2: #e8a030;
+  --stage3: #e87040;
+  --stage4: #9b6fd4;
+  --stage5: #2d9cdb;
+  --stage6: #27c47e;
+  --stage7: #c9a43e;
+  --stage8: #2dd49a;
+  --radius: 8px;
+  --radius2: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow2: 0 8px 40px rgba(0,0,0,0.6);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;line-height:1.5;min-height:100vh;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--gold2)}
+input,select,textarea{background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;border-radius:var(--radius);padding:8px 12px;width:100%;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+select option{background:var(--bg3)}
+textarea{resize:vertical;min-height:80px}
+label{font-size:12px;color:var(--text2);font-weight:600;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:4px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius);border:none;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.03em;white-space:nowrap}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-ghost{background:transparent;color:var(--text2);border:none}
+.btn-ghost:hover{color:var(--text);background:var(--card2)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#f05060}
+.btn-success{background:var(--success);color:#000}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-xs{padding:3px 8px;font-size:11px}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+
+/* HEADER */
+#app-header{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo-area{display:flex;align-items:center;gap:12px}
+.logo-globe{width:36px;height:36px;background:radial-gradient(circle at 35% 35%,#1a5fb0,#05101f);border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);flex-shrink:0}
+.logo-text{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--text);letter-spacing:.08em}
+.logo-sub{font-size:10px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif}
+.header-right{display:flex;align-items:center;gap:12px}
+.header-agent{text-align:right}
+.header-agent-name{font-size:13px;font-weight:600;color:var(--text)}
+.header-agent-role{font-size:11px;color:var(--text3)}
+.alert-badge{background:var(--danger);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+/* NAV TABS */
+#nav-tabs{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+#nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:12px 16px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif}
+.nav-tab:hover{color:var(--text2)}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.nav-tab .tab-count{background:var(--bg3);color:var(--text2);border-radius:10px;padding:1px 6px;font-size:10px}
+.nav-tab.active .tab-count{background:var(--gold-dim);color:var(--gold)}
+
+/* MAIN */
+#main{padding:24px;max-width:1400px;margin:0 auto}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.section-title{font-family:'Cinzel',serif;font-size:20px;font-weight:600;color:var(--text)}
+.section-title span{color:var(--gold)}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.kpi-card:hover{border-color:var(--gold)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi-card.c1::before{background:var(--stage1)}
+.kpi-card.c2::before{background:var(--stage2)}
+.kpi-card.c3::before{background:var(--stage3)}
+.kpi-card.c4::before{background:var(--stage4)}
+.kpi-card.c5::before{background:var(--stage5)}
+.kpi-card.c6::before{background:var(--stage6)}
+.kpi-card.c7::before{background:var(--stage7)}
+.kpi-card.c8::before{background:var(--stage8)}
+.kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);font-weight:600;font-family:'Barlow Condensed',sans-serif;margin-bottom:6px}
+.kpi-value{font-size:32px;font-weight:700;font-family:'Barlow Condensed',sans-serif;line-height:1}
+.kpi-sub{font-size:11px;color:var(--text3);margin-top:4px}
+
+/* ALERT PANEL */
+.alert-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;margin-bottom:24px}
+.alert-panel-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);font-weight:600;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif}
+.alert-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.alert-item:last-child{border-bottom:none}
+.alert-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:1px}
+.alert-icon.warn{background:rgba(240,165,0,.15);color:var(--warning)}
+.alert-icon.danger{background:rgba(232,72,90,.15);color:var(--danger)}
+.alert-icon.info{background:rgba(42,144,217,.15);color:var(--stage1)}
+.alert-text{font-size:13px;color:var(--text2);line-height:1.4}
+.alert-text strong{color:var(--text)}
+.no-alerts{text-align:center;padding:16px;color:var(--text3);font-size:13px}
+
+/* PIPELINE TABLE */
+.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px}
+.search-wrap input{padding-left:32px}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px}
+.filter-select{width:auto;min-width:140px}
+
+.table-wrap{overflow-x:auto;border-radius:var(--radius2);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+thead{background:var(--bg3)}
+th{padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600;font-family:'Barlow Condensed',sans-serif;white-space:nowrap;border-bottom:1px solid var(--border)}
+th.sortable{cursor:pointer}
+th.sortable:hover{color:var(--text)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:13px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--card2);cursor:pointer}
+.td-name{font-weight:600;color:var(--text)}
+.td-name small{display:block;color:var(--text3);font-size:11px;font-weight:400}
+.td-state{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:13px}
+.license-ok{color:var(--success)}
+.license-warn{color:var(--danger)}
+
+/* STAGE BADGE */
+.stage-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;white-space:nowrap}
+.stage-new{background:rgba(74,144,217,.15);color:var(--stage1)}
+.stage-attempted{background:rgba(232,160,48,.15);color:var(--stage2)}
+.stage-connected{background:rgba(232,112,64,.15);color:var(--stage3)}
+.stage-scheduled{background:rgba(155,111,212,.15);color:var(--stage4)}
+.stage-interviewed{background:rgba(45,156,219,.15);color:var(--stage5)}
+.stage-decision{background:rgba(39,196,126,.15);color:var(--stage6)}
+.stage-enrolled{background:rgba(201,164,62,.15);color:var(--stage7)}
+.stage-licensed{background:rgba(45,212,154,.15);color:var(--stage8)}
+
+.source-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.04em;font-family:'Barlow Condensed',sans-serif}
+.src-ao{background:rgba(26,95,176,.2);color:var(--blue2)}
+.src-funnel{background:rgba(201,164,62,.2);color:var(--gold)}
+.src-ref{background:rgba(45,212,154,.2);color:var(--success)}
+
+.checkmark{color:var(--success);font-size:14px}
+.xmark{color:var(--text3);font-size:14px}
+.action-btns{display:flex;gap:4px}
+
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:20px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.card-title{font-size:13px;font-weight:600;color:var(--text2)}
+
+/* STATE GRID */
+.state-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-top:16px}
+.state-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s}
+.state-item:hover{border-color:var(--gold)}
+.state-item.licensed{background:rgba(45,212,154,.08);border-color:var(--success)}
+.state-item.needs-license{background:rgba(232,72,90,.08);border-color:var(--danger)}
+.state-check{width:18px;height:18px;border:2px solid var(--border2);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:11px}
+.state-item.licensed .state-check{background:var(--success);border-color:var(--success);color:#000}
+.state-name-abbr{font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:14px}
+.state-name-full{font-size:10px;color:var(--text3);line-height:1.2}
+.state-alert{font-size:9px;color:var(--danger);font-weight:600;margin-top:1px}
+
+/* PRODUCTION */
+.prod-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.prod-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}
+.prod-stat-val{font-size:24px;font-weight:700;font-family:'Barlow Condensed',sans-serif;color:var(--gold)}
+.prod-stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-family:'Barlow Condensed',sans-serif}
+
+/* SCRIPT */
+.script-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:24px;max-width:860px}
+.script-section{margin-bottom:24px}
+.script-section-title{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);letter-spacing:.08em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.script-text{font-size:14px;line-height:1.7;color:var(--text2);margin-bottom:10px}
+.script-text em{color:var(--gold2);font-style:normal;font-weight:600}
+.script-check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;padding:8px;border-radius:var(--radius);transition:background .2s;cursor:pointer}
+.script-check-item:hover{background:var(--card2)}
+.script-check-item input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--gold);cursor:pointer}
+.script-check-item label{cursor:pointer;color:var(--text2);font-size:13px;line-height:1.5}
+.script-check-item.checked label{color:var(--text3);text-decoration:line-through}
+.script-field{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.script-field-label{color:var(--gold2);font-size:13px;font-weight:600;white-space:nowrap;min-width:120px}
+.script-field input{border-bottom:1px solid var(--border);background:transparent;border-left:none;border-top:none;border-right:none;border-radius:0;padding:4px 8px;flex:1}
+.if-branch{background:rgba(201,164,62,.06);border-left:3px solid var(--gold);padding:10px 14px;border-radius:0 var(--radius) var(--radius) 0;margin:8px 0}
+.if-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:6px;font-family:'Barlow Condensed',sans-serif}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:700px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow2);animation:modalIn .2s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.97) translateY(8px)}to{opacity:1;transform:none}}
+.modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg2);z-index:1}
+.modal-title{font-family:'Cinzel',serif;font-size:16px;font-weight:600}
+.modal-close{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;line-height:1;padding:4px;border-radius:4px}
+.modal-close:hover{color:var(--text);background:var(--card2)}
+.modal-body{padding:20px 24px}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+
+/* FORM GRID */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid.cols3{grid-template-columns:1fr 1fr 1fr}
+.form-grid .span2{grid-column:1/-1}
+.form-row{margin-bottom:14px}
+.divider{border:none;border-top:1px solid var(--border);margin:16px 0}
+
+/* ACTIVITY LOG */
+.activity-log{margin-top:12px}
+.activity-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.act-call{background:rgba(74,144,217,.15);color:var(--stage1)}
+.act-text{background:rgba(39,196,126,.15);color:var(--stage6)}
+.act-email{background:rgba(201,164,62,.15);color:var(--gold)}
+.act-note{background:rgba(155,111,212,.15);color:var(--purple)}
+.activity-body{flex:1}
+.activity-meta{font-size:11px;color:var(--text3);margin-bottom:3px}
+.activity-desc{font-size:13px;color:var(--text2)}
+
+/* PROGRESS BAR */
+.pipeline-bar{display:flex;gap:4px;margin-bottom:24px;overflow-x:auto;padding-bottom:4px}
+.pipeline-stage{flex:1;min-width:100px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px;text-align:center;cursor:pointer;transition:all .2s}
+.pipeline-stage:hover{border-color:var(--gold)}
+.pipeline-stage-count{font-size:24px;font-weight:700;font-family:'Barlow Condensed',sans-serif}
+.pipeline-stage-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px;font-family:'Barlow Condensed',sans-serif}
+
+/* INTERVIEW CARDS */
+.interview-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:16px}
+.interview-date-box{background:var(--bg3);border-radius:var(--radius);padding:10px 14px;text-align:center;min-width:60px}
+.interview-date-month{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.interview-date-day{font-size:28px;font-weight:700;font-family:'Barlow Condensed',sans-serif;line-height:1}
+.interview-info{flex:1}
+.interview-name{font-size:14px;font-weight:600}
+.interview-meta{font-size:12px;color:var(--text3);margin-top:2px}
+.type-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em}
+.type-group{background:rgba(155,111,212,.2);color:var(--purple)}
+.type-1on1{background:rgba(201,164,62,.2);color:var(--gold)}
+
+/* ENROLLMENT CARD */
+.enrollment-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;margin-bottom:12px}
+.enrollment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.enrollment-name{font-size:14px;font-weight:600}
+.enrollment-steps{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.enroll-step{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;font-family:'Barlow Condensed',sans-serif}
+.step-done{background:rgba(45,212,154,.15);color:var(--success)}
+.step-pending{background:rgba(77,122,158,.1);color:var(--text3)}
+.step-active{background:rgba(201,164,62,.15);color:var(--gold)}
+
+/* TOAST */
+.toast-container{position:fixed;bottom:20px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--card2);border:1px solid var(--border2);border-radius:var(--radius);padding:10px 16px;font-size:13px;box-shadow:var(--shadow);animation:toastIn .3s ease;display:flex;align-items:center;gap:8px;max-width:320px}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.toast.success{border-left:3px solid var(--success)}
+.toast.error{border-left:3px solid var(--danger)}
+.toast.info{border-left:3px solid var(--gold)}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:48px 24px;color:var(--text3)}
+.empty-state .empty-icon{font-size:48px;margin-bottom:12px;opacity:.4}
+.empty-state h3{font-size:16px;color:var(--text2);margin-bottom:6px}
+.empty-state p{font-size:13px;line-height:1.5}
+
+/* SETTINGS */
+.settings-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:20px;margin-bottom:16px}
+.settings-section-title{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);margin-bottom:16px}
+.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.link-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px;display:flex;align-items:center;justify-content:space-between}
+.link-label{font-size:12px;font-weight:600;color:var(--text2)}
+.link-url{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.data-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+@media(max-width:768px){
+  .form-grid{grid-template-columns:1fr}
+  .form-grid .span2{grid-column:1}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  #main{padding:12px}
+  .modal{max-width:100%}
+  .link-grid{grid-template-columns:1fr}
+  .pipeline-bar{gap:2px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="app-header">
+  <div class="logo-area">
+    <div class="logo-globe">A</div>
+    <div>
+      <div class="logo-text">AO GLOBE LIFE</div>
+      <div class="logo-sub">Recruiting Command Center</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-agent">
+      <div class="header-agent-name" id="hdr-name">Slade Smiley</div>
+      <div class="header-agent-role">Regional Producer</div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div id="nav-tabs">
+  <div class="nav-tab active" data-tab="dashboard">📊 Dashboard</div>
+  <div class="nav-tab" data-tab="leads">👥 Leads <span class="tab-count" id="tc-leads">0</span></div>
+  <div class="nav-tab" data-tab="interviews">📅 Interviews <span class="tab-count" id="tc-interviews">0</span></div>
+  <div class="nav-tab" data-tab="training">🎓 Training <span class="tab-count" id="tc-training">0</span></div>
+  <div class="nav-tab" data-tab="licenses">🗺️ My Licenses</div>
+  <div class="nav-tab" data-tab="production">💰 Production</div>
+  <div class="nav-tab" data-tab="script">📋 Script</div>
+  <div class="nav-tab" data-tab="settings">⚙️ Settings</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+<!-- ===== DASHBOARD ===== -->
+<div class="tab-content active" id="tab-dashboard">
+  <div class="section-header">
+    <div class="section-title">Good morning, <span id="dash-name">Slade</span></div>
+    <div id="dash-date" style="color:var(--text3);font-size:13px"></div>
+  </div>
+  <div class="kpi-grid" id="kpi-grid"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+    <div class="alert-panel">
+      <div class="alert-panel-title">⚠️ Action Required</div>
+      <div id="alert-list"><div class="no-alerts">No alerts — you're all caught up!</div></div>
+    </div>
+    <div class="alert-panel">
+      <div class="alert-panel-title">📅 Follow-Ups Due Today</div>
+      <div id="followup-list"><div class="no-alerts">No follow-ups scheduled for today</div></div>
+    </div>
+  </div>
+  <div class="alert-panel">
+    <div class="alert-panel-title">📈 Pipeline Overview</div>
+    <div class="pipeline-bar" id="pipeline-bar"></div>
+  </div>
+  <div style="margin-top:20px" class="alert-panel">
+    <div class="alert-panel-title">🕐 Recent Activity</div>
+    <div id="recent-activity"><div class="no-alerts">No recent activity</div></div>
+  </div>
+</div>
+
+<!-- ===== LEADS ===== -->
+<div class="tab-content" id="tab-leads">
+  <div class="section-header">
+    <div class="section-title">Lead <span>Pipeline</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-outline btn-sm" onclick="importCSV()">⬆ Import AO Hub CSV</button>
+      <button class="btn btn-gold btn-sm" onclick="openAddLead()">+ Add Lead</button>
+    </div>
+  </div>
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="lead-search" placeholder="Search by name, email, phone..." oninput="renderLeads()">
+    </div>
+    <select class="filter-select" id="filter-stage" onchange="renderLeads()">
+      <option value="">All Stages</option>
+      <option value="new">New Lead</option>
+      <option value="attempted">Attempted Contact</option>
+      <option value="connected">Connected</option>
+      <option value="scheduled">Interview Scheduled</option>
+      <option value="interviewed">Interview Complete</option>
+      <option value="decision">Licensing Decision</option>
+      <option value="enrolled">Pre-Lic Enrolled</option>
+      <option value="licensed">Licensed / Hired</option>
+    </select>
+    <select class="filter-select" id="filter-source" onchange="renderLeads()">
+      <option value="">All Sources</option>
+      <option value="ao-hub">AO Hub</option>
+      <option value="personal-funnel">Personal Funnel</option>
+      <option value="referral">Referral</option>
+    </select>
+    <select class="filter-select" id="filter-state" onchange="renderLeads()">
+      <option value="">All States</option>
+    </select>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>State</th>
+          <th>Source</th>
+          <th>Stage</th>
+          <th>Webinar</th>
+          <th>Quest.</th>
+          <th>Follow-Up</th>
+          <th>Last Activity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="leads-tbody">
+        <tr><td colspan="10"><div class="empty-state"><div class="empty-icon">👥</div><h3>No leads yet</h3><p>Import from AO Hub or add a lead manually</p></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <input type="file" id="csv-file-input" accept=".csv,.xlsx" style="display:none" onchange="handleCSVUpload(event)">
+</div>
+
+<!-- ===== INTERVIEWS ===== -->
+<div class="tab-content" id="tab-interviews">
+  <div class="section-header">
+    <div class="section-title">Final <span>Interviews</span></div>
+    <button class="btn btn-gold btn-sm" onclick="openScheduleInterview()">+ Schedule Interview</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);font-weight:600;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif">📅 Upcoming</div>
+      <div id="upcoming-interviews"><div class="empty-state"><div class="empty-icon">📅</div><h3>No upcoming interviews</h3></div></div>
+    </div>
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);font-weight:600;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif">✅ Completed</div>
+      <div id="past-interviews"><div class="empty-state"><div class="empty-icon">✅</div><h3>No completed interviews</h3></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TRAINING ===== -->
+<div class="tab-content" id="tab-training">
+  <div class="section-header">
+    <div class="section-title">Training & <span>Enrollment</span></div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:8px 16px;font-size:12px;color:var(--text2)">
+      💰 Compensation: <span id="comp-total" style="color:var(--gold);font-weight:700">$0</span> credited
+    </div>
+  </div>
+  <div id="training-list"><div class="empty-state"><div class="empty-icon">🎓</div><h3>No enrollments yet</h3><p>Recruits who agree to get licensed will appear here</p></div></div>
+</div>
+
+<!-- ===== LICENSES ===== -->
+<div class="tab-content" id="tab-licenses">
+  <div class="section-header">
+    <div class="section-title">My <span>License Portfolio</span></div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <div style="font-size:13px;color:var(--text2)">Licensed in <span id="lic-count" style="color:var(--gold);font-weight:700">0</span> states</div>
+      <div id="lic-alert-count" style="font-size:13px;color:var(--danger);display:none">⚠️ <span id="lic-alert-num">0</span> recruits in unlicensed states</div>
+    </div>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;margin-bottom:16px">
+    <div style="font-size:12px;color:var(--text2);line-height:1.6">
+      Click any state to toggle your license status. States with recruits who need that license are highlighted in <span style="color:var(--danger)">red</span>. A link to your state licensing cost breakdown is available in <a onclick="switchTab('settings')">Settings</a>.
+    </div>
+  </div>
+  <div class="state-grid" id="state-grid"></div>
+</div>
+
+<!-- ===== PRODUCTION ===== -->
+<div class="tab-content" id="tab-production">
+  <div class="section-header">
+    <div class="section-title">Production <span>Tracker</span></div>
+    <button class="btn btn-gold btn-sm" onclick="openAddSale()">+ Log Sale</button>
+  </div>
+  <div class="prod-summary" id="prod-summary"></div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Client</th>
+          <th>Product</th>
+          <th>State</th>
+          <th>ALP</th>
+          <th>Comm. %</th>
+          <th>Est. Commission</th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="prod-tbody">
+        <tr><td colspan="9"><div class="empty-state"><div class="empty-icon">💰</div><h3>No sales logged yet</h3><p>Log your first sale to start tracking production</p></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SCRIPT ===== -->
+<div class="tab-content" id="tab-script">
+  <div class="section-header">
+    <div class="section-title">Final Interview <span>Setting Script</span></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline btn-sm" onclick="resetScript()">🔄 Reset Checkboxes</button>
+      <button class="btn btn-gold btn-sm" onclick="window.print()">🖨 Print Script</button>
+    </div>
+  </div>
+  <div class="script-wrap">
+    <!-- Candidate Info -->
+    <div class="script-section">
+      <div class="script-section-title">CANDIDATE INFORMATION</div>
+      <div class="form-grid">
+        <div class="form-row"><label>Candidate Name</label><input type="text" id="sc-name" placeholder="Full name"></div>
+        <div class="form-row"><label>Phone Number</label><input type="text" id="sc-phone" placeholder="(xxx) xxx-xxxx"></div>
+        <div class="form-row"><label>Email Address</label><input type="text" id="sc-email" placeholder="email@example.com"></div>
+        <div class="form-row"><label>Date / Time Called</label><input type="text" id="sc-date" placeholder="e.g. June 1 @ 9:00 AM"></div>
+        <div class="form-row"><label>Candidate State</label><input type="text" id="sc-state" placeholder="State"></div>
+        <div class="form-row"><label>Interview Type</label>
+          <select id="sc-type"><option value="group">Group Final Interview (Zoom)</option><option value="1on1">One-on-One (Zoom)</option></select>
+        </div>
+      </div>
+    </div>
+    <!-- Opening -->
+    <div class="script-section">
+      <div class="script-section-title">OPENING</div>
+      <div class="script-text">Hi <em id="sc-name-display">[Name]</em>, this is Slade Smiley calling with AO Globe Life. The reason I am calling is you watched a brief overview on our company and I wanted to get to know you a little better. How are you today?</div>
+      <div class="script-text" style="margin-top:8px;font-style:italic;color:var(--text3)">Great! When you watched the company overview you expressed interest in moving forward in the interview process.</div>
+      <div class="script-check-item"><input type="checkbox" id="ck1"><label for="ck1">What is it that stood out to you most about the opportunity?</label></div>
+      <div class="script-check-item"><input type="checkbox" id="ck2"><label for="ck2">Anything else? <span style="color:var(--text3)">(Listen actively. Note their top motivators.)</span></label></div>
+    </div>
+    <!-- Licensing -->
+    <div class="script-section">
+      <div class="script-section-title">LICENSING QUALIFICATION</div>
+      <div class="script-check-item"><input type="checkbox" id="ck3"><label for="ck3">Do you currently hold a professional Life and Health insurance license in <em id="sc-state-display">[State]</em>?</label></div>
+      <div class="if-branch">
+        <div class="if-label">✅ IF YES</div>
+        <div class="script-text">That's fantastic! Having your license already puts you in a great position to hit the ground running.</div>
+        <div class="script-check-item"><input type="checkbox" id="ck4"><label for="ck4">Are you, or have you ever been, appointed with another insurance company? <span style="color:var(--text3)">If yes — which company?</span></label></div>
+      </div>
+      <div class="if-branch" style="border-left-color:var(--stage2)">
+        <div class="if-label" style="color:var(--stage2)">❌ IF NO</div>
+        <div class="script-text">Ok, let me walk you through the licensing process… We are in a highly regulated industry so it is mandated that you obtain a license in order to work with clients. However, in our industry the licensing process is much quicker than in other professions. How this works is — if we agree to begin working together, we would help you enroll in a pre-licensing course. This is a 40-hour online course and gets you certified to take the state exam. This course is typically $50–$150 and takes about a week for most people to complete.</div>
+        <div class="script-check-item"><input type="checkbox" id="ck5"><label for="ck5">If we decide to move forward, is that something you are able to complete?</label></div>
+      </div>
+    </div>
+    <!-- Evaluation -->
+    <div class="script-section">
+      <div class="script-section-title">CANDIDATE EVALUATION</div>
+      <div class="script-check-item"><input type="checkbox" id="ck6"><label for="ck6">So <em id="sc-name-display2">[Name]</em> — why you? What sets you apart from everyone else applying for this position?</label></div>
+      <div class="script-check-item"><input type="checkbox" id="ck7"><label for="ck7">Anything else?</label></div>
+      <div class="form-row" style="margin-top:10px"><label>Things that stand out about this candidate</label><textarea id="sc-notes" placeholder="Note key qualities, motivators, objections..."></textarea></div>
+    </div>
+    <!-- Close - Group -->
+    <div class="script-section" id="close-group">
+      <div class="script-section-title">CLOSE — GROUP FINAL INTERVIEW</div>
+      <div class="script-text">After speaking with you <em id="sc-name-display3">[Name]</em>, I feel comfortable moving forward with the interview process. The next step will be meeting with one of our top leaders in a Zoom interview with a few other candidates where we will go in depth about schedule, training, compensation, and promotion path. Right after, you will meet one-on-one with a senior leader to answer any additional questions and ultimately decide if this position is a mutual fit. This interview takes about an hour.</div>
+      <div class="script-check-item"><input type="checkbox" id="ck8"><label for="ck8">I'd love to get you scheduled for that interview. How does that sound?</label></div>
+      <div class="script-text" style="margin-top:8px">Great — I'm going to send you a text message with a Calendly link.</div>
+      <div class="script-check-item"><input type="checkbox" id="ck9"><label for="ck9">Let me know when you get the text.</label></div>
+      <div class="script-check-item"><input type="checkbox" id="ck10"><label for="ck10">Great — click the link, select your date/time, and confirm your spot.</label></div>
+      <div style="margin-top:12px"><div class="script-section-title" style="font-size:12px;margin-bottom:8px">QUICK REMINDERS</div></div>
+      <div class="script-check-item"><input type="checkbox" id="ck11"><label for="ck11">Please dress professionally and join from a quiet space.</label></div>
+      <div class="script-check-item"><input type="checkbox" id="ck12"><label for="ck12">Please join from a laptop or computer (not your phone) — there will be a lot of information to take notes on.</label></div>
+      <div class="script-check-item"><input type="checkbox" id="ck13"><label for="ck13">Please join five minutes early to check your audio and video settings.</label></div>
+      <div class="script-text" style="margin-top:10px;color:var(--gold2);font-weight:600"><em id="sc-name-display4">[Name]</em>, I can't wait to tell our leadership team about you. We look forward to meeting with you!</div>
+    </div>
+    <!-- Close - 1on1 -->
+    <div class="script-section" id="close-1on1" style="display:none">
+      <div class="script-section-title">CLOSE — ONE-ON-ONE FINAL INTERVIEW</div>
+      <div class="script-text">After speaking with you <em>[Name]</em>, I feel comfortable moving forward with the interview process. What happens next is we set up a one-on-one Zoom meeting where I will go in depth about schedule, training, compensation, promotion path, and address any questions you have.</div>
+      <div class="script-check-item"><input type="checkbox" id="ck14"><label for="ck14">Now, I do have availability — which date/time works best for you?</label></div>
+      <div class="script-check-item"><input type="checkbox" id="ck15"><label for="ck15">Let me know when you get the Calendly text.</label></div>
+      <div class="script-check-item"><input type="checkbox" id="ck16"><label for="ck16">Please dress professionally, join from a quiet space, on a laptop, 5 minutes early.</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SETTINGS ===== -->
+<div class="tab-content" id="tab-settings">
+  <div class="section-header"><div class="section-title">Settings & <span>Tools</span></div></div>
+  <div class="settings-section">
+    <div class="settings-section-title">Agent Profile</div>
+    <div class="form-grid">
+      <div class="form-row"><label>Your Name</label><input type="text" id="set-name" value="Slade Smiley"></div>
+      <div class="form-row"><label>Recruiting Email</label><input type="text" id="set-email" value="sladeSmiley@aoglobelife.vip"></div>
+      <div class="form-row"><label>Phone</label><input type="text" id="set-phone" value="818-521-8497"></div>
+      <div class="form-row"><label>Calendly Link</label><input type="text" id="set-calendly" placeholder="https://calendly.com/your-link"></div>
+    </div>
+    <button class="btn btn-gold btn-sm" onclick="saveSettings()">Save Profile</button>
+  </div>
+  <div class="settings-section">
+    <div class="settings-section-title">Quick Links</div>
+    <div class="link-grid">
+      <div class="link-item"><div><div class="link-label">Apply Link</div><div class="link-url">aointerview.com/apply/vendor/10678</div></div><a href="https://aointerview.com/apply/vendor/10678" target="_blank" class="btn btn-outline btn-xs">Open</a></div>
+      <div class="link-item"><div><div class="link-label">AO Interview Hub</div><div class="link-url">aointerview.com/hub/applicants</div></div><a href="https://aointerview.com/hub/applicants" target="_blank" class="btn btn-outline btn-xs">Open</a></div>
+      <div class="link-item"><div><div class="link-label">Daily Schedule</div><div class="link-url">AO_Daily_Schedule.html</div></div><a href="AO_Daily_Schedule.html" target="_blank" class="btn btn-outline btn-xs">Open</a></div>
+      <div class="link-item"><div><div class="link-label">State Licensing Costs</div><div class="link-url">AO_GlobeLife_Detailed_Licensing_Breakdown.html</div></div><a href="AO_GlobeLife_Detailed_Licensing_Breakdown.html" target="_blank" class="btn btn-outline btn-xs">Open</a></div>
+    </div>
+  </div>
+  <div class="settings-section">
+    <div class="settings-section-title">Data Management</div>
+    <div class="data-actions">
+      <button class="btn btn-outline btn-sm" onclick="exportData()">⬇ Export All Data (JSON)</button>
+      <label class="btn btn-outline btn-sm" style="cursor:pointer">⬆ Import Data (JSON)<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+      <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑 Clear All Data</button>
+    </div>
+    <div style="margin-top:12px;padding:12px;background:var(--bg3);border-radius:var(--radius);font-size:12px;color:var(--text3);line-height:1.7">
+      <strong style="color:var(--text2)">Cross-device sync instructions:</strong><br>
+      1. Click "Export All Data" on your current device — saves a <code style="color:var(--gold)">.json</code> backup file.<br>
+      2. Copy that file to your OneDrive or Google Drive folder.<br>
+      3. On your other device, open the CRM and click "Import Data" — select that same file.<br>
+      4. Make this a habit before switching devices to keep data current.
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- ===== MODALS ===== -->
+
+<!-- Add / Edit Lead -->
+<div class="modal-overlay" id="modal-lead">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-lead-title">Add Lead</div>
+      <button class="modal-close" onclick="closeModal('modal-lead')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-row"><label>First Name *</label><input type="text" id="ld-fname"></div>
+        <div class="form-row"><label>Last Name *</label><input type="text" id="ld-lname"></div>
+        <div class="form-row"><label>Phone</label><input type="tel" id="ld-phone" placeholder="(xxx) xxx-xxxx"></div>
+        <div class="form-row"><label>Email</label><input type="email" id="ld-email"></div>
+        <div class="form-row"><label>State</label>
+          <select id="ld-state"><option value="">Select state...</option></select>
+        </div>
+        <div class="form-row"><label>Source</label>
+          <select id="ld-source"><option value="ao-hub">AO Hub (Company Lead)</option><option value="personal-funnel">Personal Funnel</option><option value="referral">Referral</option></select>
+        </div>
+        <div class="form-row"><label>AO Hub ID</label><input type="text" id="ld-aohub-id" placeholder="e.g. 2006804"></div>
+        <div class="form-row"><label>Stage</label>
+          <select id="ld-stage">
+            <option value="new">New Lead</option>
+            <option value="attempted">Attempted Contact</option>
+            <option value="connected">Connected</option>
+            <option value="scheduled">Interview Scheduled</option>
+            <option value="interviewed">Interview Complete</option>
+            <option value="decision">Licensing Decision</option>
+            <option value="enrolled">Pre-Lic Enrolled</option>
+            <option value="licensed">Licensed / Hired</option>
+          </select>
+        </div>
+        <div class="form-row"><label>Webinar Completed Date</label><input type="date" id="ld-webinar"></div>
+        <div class="form-row"><label>Questionnaire Completed Date</label><input type="date" id="ld-quest"></div>
+        <div class="form-row"><label>Follow-Up Date</label><input type="date" id="ld-followup"></div>
+        <div class="form-row"><label>Priority</label>
+          <select id="ld-priority"><option value="normal">Normal</option><option value="high">High</option><option value="low">Low</option></select>
+        </div>
+        <div class="form-row span2"><label>Notes</label><textarea id="ld-notes" rows="3"></textarea></div>
+        <div class="form-row span2" id="ld-quest-section" style="display:none">
+          <hr class="divider">
+          <label style="color:var(--gold);font-size:13px;margin-bottom:10px">Questionnaire Responses (from AO Hub)</label>
+          <div class="form-row"><label>What stood out most about the opportunity?</label><textarea id="ld-q1" rows="2"></textarea></div>
+          <div class="form-row"><label>Why would they be a good fit?</label><textarea id="ld-q2" rows="2"></textarea></div>
+          <div class="form-row"><label>Willing to invest in licensing?</label>
+            <select id="ld-q3"><option value="">Unknown</option><option value="yes">Yes</option><option value="no">No</option></select>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="toggleQuestSection()" style="margin-top:4px">+ Add Questionnaire Responses</button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-lead')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveLead()">Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lead Detail / Activity -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal" style="max-width:820px">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="detail-name">Lead Details</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:3px" id="detail-meta"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-detail')">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Quick actions -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap" id="detail-actions"></div>
+      <!-- Info row -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px" id="detail-info"></div>
+      <!-- Stage selector -->
+      <div class="form-row" style="margin-bottom:16px">
+        <label>Pipeline Stage</label>
+        <select id="detail-stage" onchange="updateLeadStage()"></select>
+      </div>
+      <!-- Follow-up date -->
+      <div class="form-row" style="margin-bottom:16px">
+        <label>Follow-Up Date</label>
+        <input type="date" id="detail-followup" onchange="updateFollowup()">
+      </div>
+      <hr class="divider">
+      <!-- Activity log -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-family:'Barlow Condensed',sans-serif">Activity Log</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-outline btn-xs" onclick="logActivity('call')">📞 Call</button>
+          <button class="btn btn-outline btn-xs" onclick="logActivity('text')">💬 Text</button>
+          <button class="btn btn-outline btn-xs" onclick="logActivity('email')">✉️ Email</button>
+          <button class="btn btn-outline btn-xs" onclick="logActivity('note')">📝 Note</button>
+        </div>
+      </div>
+      <div id="detail-activity-log"><div class="no-alerts" style="padding:16px">No activity logged yet</div></div>
+      <!-- Q&A section -->
+      <div id="detail-qa" style="margin-top:16px"></div>
+      <!-- Licensing section -->
+      <div id="detail-licensing" style="margin-top:16px"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="editCurrentLead()">✏️ Edit Lead</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteCurrentLead()">🗑 Delete</button>
+      <button class="btn btn-gold" onclick="closeModal('modal-detail')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- Log Activity -->
+<div class="modal-overlay" id="modal-activity">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <div class="modal-title" id="activity-modal-title">Log Activity</div>
+      <button class="modal-close" onclick="closeModal('modal-activity')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="act-type">
+      <div class="form-row"><label>Date & Time</label><input type="datetime-local" id="act-date"></div>
+      <div class="form-row" id="act-outcome-row">
+        <label>Outcome</label>
+        <select id="act-outcome">
+          <option value="no-answer">No Answer</option>
+          <option value="left-message">Left Message / Voicemail</option>
+          <option value="connected">Connected — Had Conversation</option>
+          <option value="scheduled">Scheduled Interview</option>
+          <option value="not-interested">Not Interested</option>
+          <option value="callback">Callback Requested</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Notes</label><textarea id="act-notes" rows="3" placeholder="What was discussed, next steps..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-activity')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveActivity()">Save Activity</button>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule Interview -->
+<div class="modal-overlay" id="modal-interview">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <div class="modal-title">Schedule Final Interview</div>
+      <button class="modal-close" onclick="closeModal('modal-interview')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row"><label>Lead</label>
+        <select id="int-lead-id"><option value="">Select lead...</option></select>
+      </div>
+      <div class="form-grid">
+        <div class="form-row"><label>Interview Type</label>
+          <select id="int-type"><option value="group">Group Final (Zoom)</option><option value="1on1">One-on-One (Zoom)</option></select>
+        </div>
+        <div class="form-row"><label>Date</label><input type="date" id="int-date"></div>
+        <div class="form-row"><label>Time</label><input type="time" id="int-time"></div>
+        <div class="form-row"><label>Zoom Link</label><input type="text" id="int-zoom" placeholder="https://zoom.us/j/..."></div>
+        <div class="form-row span2"><label>Notes</label><textarea id="int-notes" rows="2"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-interview')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveInterview()">Schedule</button>
+    </div>
+  </div>
+</div>
+
+<!-- Log Sale -->
+<div class="modal-overlay" id="modal-sale">
+  <div class="modal" style="max-width:540px">
+    <div class="modal-header">
+      <div class="modal-title">Log Sale</div>
+      <button class="modal-close" onclick="closeModal('modal-sale')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-row"><label>Date</label><input type="date" id="sale-date"></div>
+        <div class="form-row"><label>Client Name</label><input type="text" id="sale-client"></div>
+        <div class="form-row span2"><label>Product</label>
+          <select id="sale-product">
+            <option value="Whole Life">Whole Life</option>
+            <option value="Preferred Life">Preferred Life</option>
+            <option value="Executive Life">Executive Life</option>
+            <option value="Select Life">Select Life</option>
+            <option value="LPU65">LPU65 (Limited Pay to 65)</option>
+            <option value="4 Year RC">4 Year RC (Renewable & Convertible Term)</option>
+            <option value="10 Year RC">10 Year RC (Renewable & Convertible Term)</option>
+            <option value="20 Year Level Term">20 Year Level Term</option>
+          </select>
+        </div>
+        <div class="form-row"><label>State</label><select id="sale-state"><option value="">Select...</option></select></div>
+        <div class="form-row"><label>ALP (Annual Life Premium $)</label><input type="number" id="sale-alp" placeholder="0.00" step="0.01"></div>
+        <div class="form-row"><label>Commission Rate (%)</label><input type="number" id="sale-comm" placeholder="65" min="50" max="80" value="65"></div>
+        <div class="form-row span2"><label>Notes</label><textarea id="sale-notes" rows="2"></textarea></div>
+      </div>
+      <div style="margin-top:8px;padding:10px;background:var(--bg3);border-radius:var(--radius);font-size:13px;color:var(--text2)">
+        Est. Commission: <strong style="color:var(--gold);font-size:16px" id="sale-preview">$0.00</strong>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-sale')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveSale()">Log Sale</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// ============================================================
+// CONSTANTS
+// ============================================================
+const STAGES = [
+  {id:'new',label:'New Lead',color:'var(--stage1)',cls:'stage-new'},
+  {id:'attempted',label:'Attempted Contact',color:'var(--stage2)',cls:'stage-attempted'},
+  {id:'connected',label:'Connected',color:'var(--stage3)',cls:'stage-connected'},
+  {id:'scheduled',label:'Interview Scheduled',color:'var(--stage4)',cls:'stage-scheduled'},
+  {id:'interviewed',label:'Interview Complete',color:'var(--stage5)',cls:'stage-interviewed'},
+  {id:'decision',label:'Licensing Decision',color:'var(--stage6)',cls:'stage-decision'},
+  {id:'enrolled',label:'Pre-Lic Enrolled',color:'var(--stage7)',cls:'stage-enrolled'},
+  {id:'licensed',label:'Licensed / Hired',color:'var(--stage8)',cls:'stage-licensed'}
+];
+
+const STATES = [
+  {abbr:'AL',name:'Alabama'},{abbr:'AK',name:'Alaska'},{abbr:'AZ',name:'Arizona'},
+  {abbr:'AR',name:'Arkansas'},{abbr:'CA',name:'California'},{abbr:'CO',name:'Colorado'},
+  {abbr:'CT',name:'Connecticut'},{abbr:'DE',name:'Delaware'},{abbr:'FL',name:'Florida'},
+  {abbr:'GA',name:'Georgia'},{abbr:'HI',name:'Hawaii'},{abbr:'ID',name:'Idaho'},
+  {abbr:'IL',name:'Illinois'},{abbr:'IN',name:'Indiana'},{abbr:'IA',name:'Iowa'},
+  {abbr:'KS',name:'Kansas'},{abbr:'KY',name:'Kentucky'},{abbr:'LA',name:'Louisiana'},
+  {abbr:'ME',name:'Maine'},{abbr:'MD',name:'Maryland'},{abbr:'MA',name:'Massachusetts'},
+  {abbr:'MI',name:'Michigan'},{abbr:'MN',name:'Minnesota'},{abbr:'MS',name:'Mississippi'},
+  {abbr:'MO',name:'Missouri'},{abbr:'MT',name:'Montana'},{abbr:'NE',name:'Nebraska'},
+  {abbr:'NV',name:'Nevada'},{abbr:'NH',name:'New Hampshire'},{abbr:'NJ',name:'New Jersey'},
+  {abbr:'NM',name:'New Mexico'},{abbr:'NY',name:'New York'},{abbr:'NC',name:'North Carolina'},
+  {abbr:'ND',name:'North Dakota'},{abbr:'OH',name:'Ohio'},{abbr:'OK',name:'Oklahoma'},
+  {abbr:'OR',name:'Oregon'},{abbr:'PA',name:'Pennsylvania'},{abbr:'RI',name:'Rhode Island'},
+  {abbr:'SC',name:'South Carolina'},{abbr:'SD',name:'South Dakota'},{abbr:'TN',name:'Tennessee'},
+  {abbr:'TX',name:'Texas'},{abbr:'UT',name:'Utah'},{abbr:'VT',name:'Vermont'},
+  {abbr:'VA',name:'Virginia'},{abbr:'WA',name:'Washington'},{abbr:'WV',name:'West Virginia'},
+  {abbr:'WI',name:'Wisconsin'},{abbr:'WY',name:'Wyoming'},{abbr:'DC',name:'D.C.'}
+];
+
+// ============================================================
+// STATE MANAGEMENT
+// ============================================================
+let DB = {
+  leads:[],
+  activities:{},
+  interviews:[],
+  production:[],
+  licenses:[],
+  settings:{
+    name:'Slade Smiley',
+    email:'sladeSmiley@aoglobelife.vip',
+    phone:'818-521-8497',
+    calendly:''
+  }
+};
+
+let currentLeadId = null;
+let editingLeadId = null;
+
+function loadDB(){
+  try{
+    const d = localStorage.getItem('ao_crm_data');
+    if(d) DB = JSON.parse(d);
+  }catch(e){console.warn('Load error',e)}
+}
+function saveDB(){
+  localStorage.setItem('ao_crm_data', JSON.stringify(DB));
+}
+function uuid(){
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{
+    const r=Math.random()*16|0;return(c=='x'?r:(r&0x3|0x8)).toString(16);
+  });
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>switchTab(tab.dataset.tab));
+});
+function switchTab(name){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.toggle('active',c.id==='tab-'+name));
+  if(name==='leads') renderLeads();
+  if(name==='dashboard') renderDashboard();
+  if(name==='interviews') renderInterviews();
+  if(name==='training') renderTraining();
+  if(name==='licenses') renderLicenses();
+  if(name==='production') renderProduction();
+  if(name==='settings') loadSettings();
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard(){
+  const now = new Date();
+  document.getElementById('dash-date').textContent = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('dash-name').textContent = DB.settings.name.split(' ')[0];
+
+  // KPIs
+  const grid = document.getElementById('kpi-grid');
+  const counts = {};
+  STAGES.forEach(s=>counts[s.id]=0);
+  DB.leads.forEach(l=>{ if(counts[l.stage]!==undefined) counts[l.stage]++; });
+  const kpiDefs = [
+    {label:'Total Leads',val:DB.leads.length,sub:'in pipeline',cls:'c1'},
+    {label:'Attempted',val:counts.attempted,sub:'contact made',cls:'c2'},
+    {label:'Connected',val:counts.connected,sub:'conversations',cls:'c3'},
+    {label:'Interviews Scheduled',val:counts.scheduled,sub:'pending finals',cls:'c4'},
+    {label:'Interviews Complete',val:counts.interviewed,sub:'post-interview',cls:'c5'},
+    {label:'Licensing Decisions',val:counts.decision+counts.enrolled,sub:'said yes',cls:'c6'},
+    {label:'Enrolled',val:counts.enrolled,sub:'in pre-licensing',cls:'c7'},
+    {label:'Licensed / Hired',val:counts.licensed,sub:'earning compensation',cls:'c8'}
+  ];
+  grid.innerHTML = kpiDefs.map(k=>`
+    <div class="kpi-card ${k.cls}" onclick="switchTab('leads')">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value" style="color:${k.cls==='c1'?'var(--text)':k.cls==='c8'?'var(--success)':k.cls==='c7'?'var(--gold)':'var(--text)'}">${k.val}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>`).join('');
+
+  // Alerts
+  const alerts = [];
+  const today = new Date().toISOString().split('T')[0];
+  DB.leads.forEach(l=>{
+    const stateAbbr = l.state;
+    if((l.stage==='decision'||l.stage==='enrolled'||l.stage==='licensed') && stateAbbr && !DB.licenses.includes(stateAbbr)){
+      const st = STATES.find(s=>s.abbr===stateAbbr);
+      alerts.push({type:'danger',icon:'⚠️',msg:`<strong>${l.firstName} ${l.lastName}</strong> is in <strong>${st?st.name:stateAbbr}</strong> — you are not licensed there`});
+    }
+    if(l.followUpDate && l.followUpDate < today && l.stage !== 'licensed'){
+      alerts.push({type:'warn',icon:'⏰',msg:`Follow-up overdue for <strong>${l.firstName} ${l.lastName}</strong>`});
+    }
+  });
+  const alertList = document.getElementById('alert-list');
+  alertList.innerHTML = alerts.length ? alerts.map(a=>`
+    <div class="alert-item">
+      <div class="alert-icon ${a.type==='danger'?'danger':'warn'}">${a.icon}</div>
+      <div class="alert-text">${a.msg}</div>
+    </div>`).join('') : '<div class="no-alerts">✅ No alerts — you\'re all caught up!</div>';
+
+  // Follow-ups today
+  const todayFollowups = DB.leads.filter(l=>l.followUpDate===today);
+  const fuList = document.getElementById('followup-list');
+  fuList.innerHTML = todayFollowups.length ? todayFollowups.map(l=>`
+    <div class="alert-item">
+      <div class="alert-icon info">📞</div>
+      <div class="alert-text"><strong>${l.firstName} ${l.lastName}</strong><br><span style="font-size:11px">${l.phone||l.email||'No contact info'} — ${STAGES.find(s=>s.id===l.stage)?.label||l.stage}</span></div>
+    </div>`).join('') : '<div class="no-alerts">No follow-ups scheduled for today</div>';
+
+  // Pipeline bar
+  const bar = document.getElementById('pipeline-bar');
+  bar.innerHTML = STAGES.map(s=>`
+    <div class="pipeline-stage" onclick="switchTab('leads');document.getElementById('filter-stage').value='${s.id}';renderLeads()">
+      <div class="pipeline-stage-count" style="color:${s.color}">${counts[s.id]||0}</div>
+      <div class="pipeline-stage-label">${s.label}</div>
+    </div>`).join('');
+
+  // Recent activity
+  const allActs = [];
+  Object.entries(DB.activities).forEach(([lid,acts])=>{
+    const lead = DB.leads.find(l=>l.id===lid);
+    if(lead) acts.forEach(a=>allActs.push({...a,leadName:`${lead.firstName} ${lead.lastName}`}));
+  });
+  allActs.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const recent = allActs.slice(0,8);
+  const recEl = document.getElementById('recent-activity');
+  recEl.innerHTML = recent.length ? recent.map(a=>`
+    <div class="activity-item">
+      <div class="activity-icon act-${a.type}">${a.type==='call'?'📞':a.type==='text'?'💬':a.type==='email'?'✉️':'📝'}</div>
+      <div class="activity-body">
+        <div class="activity-meta">${a.leadName} &nbsp;·&nbsp; ${fmtDate(a.date)}</div>
+        <div class="activity-desc">${capFirst(a.type)}${a.outcome?' — '+a.outcome.replace('-',' '):''}: ${a.notes||'—'}</div>
+      </div>
+    </div>`).join('') : '<div class="no-alerts">No recent activity</div>';
+
+  // Tab counts
+  document.getElementById('tc-leads').textContent = DB.leads.length;
+  document.getElementById('tc-interviews').textContent = DB.interviews.filter(i=>!i.outcome||i.outcome==='pending').length;
+  document.getElementById('tc-training').textContent = DB.leads.filter(l=>l.stage==='enrolled'||l.stage==='licensed').length;
+}
+
+// ============================================================
+// LEADS
+// ============================================================
+function populateStateFilters(){
+  const usedStates = [...new Set(DB.leads.map(l=>l.state).filter(Boolean))].sort();
+  const sel = document.getElementById('filter-state');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">All States</option>' + usedStates.map(s=>{
+    const st=STATES.find(x=>x.abbr===s);
+    return `<option value="${s}">${st?st.name:s}</option>`;
+  }).join('');
+  sel.value = cur;
+}
+
+function renderLeads(){
+  populateStateFilters();
+  const search = document.getElementById('lead-search')?.value?.toLowerCase()||'';
+  const stageF = document.getElementById('filter-stage')?.value||'';
+  const sourceF = document.getElementById('filter-source')?.value||'';
+  const stateF = document.getElementById('filter-state')?.value||'';
+
+  let filtered = DB.leads.filter(l=>{
+    const name = `${l.firstName} ${l.lastName}`.toLowerCase();
+    const matchSearch = !search || name.includes(search) || (l.email||'').toLowerCase().includes(search) || (l.phone||'').includes(search);
+    const matchStage = !stageF || l.stage===stageF;
+    const matchSource = !sourceF || l.source===sourceF;
+    const matchState = !stateF || l.state===stateF;
+    return matchSearch&&matchStage&&matchSource&&matchState;
+  });
+
+  filtered.sort((a,b)=>{
+    const pd = {high:0,normal:1,low:2};
+    return (pd[a.priority]||1)-(pd[b.priority]||1);
+  });
+
+  const tbody = document.getElementById('leads-tbody');
+  if(!filtered.length){
+    tbody.innerHTML = `<tr><td colspan="10"><div class="empty-state"><div class="empty-icon">👥</div><h3>No leads match your filters</h3></div></td></tr>`;
+    return;
+  }
+  const today = new Date().toISOString().split('T')[0];
+  tbody.innerHTML = filtered.map(l=>{
+    const stage = STAGES.find(s=>s.id===l.stage)||STAGES[0];
+    const src = l.source==='ao-hub'?'<span class="source-badge src-ao">AO Hub</span>':l.source==='personal-funnel'?'<span class="source-badge src-funnel">Funnel</span>':'<span class="source-badge src-ref">Referral</span>';
+    const licensed = DB.licenses.includes(l.state);
+    const stateDisplay = l.state ? `<span class="td-state ${licensed?'license-ok':'license-warn'}">${l.state}${!licensed&&l.state?'⚠':''}` : '—';
+    const acts = DB.activities[l.id]||[];
+    const lastAct = acts.length ? acts[acts.length-1] : null;
+    const fuDue = l.followUpDate && l.followUpDate <= today;
+    const fuDisplay = l.followUpDate ? `<span style="color:${fuDue?'var(--danger)':'var(--text2)'}">${fmtDateShort(l.followUpDate)}${fuDue?' ⏰':''}</span>` : '—';
+    return `<tr onclick="openLeadDetail('${l.id}')">
+      <td><div class="td-name">${l.firstName} ${l.lastName}${l.priority==='high'?'<span style="color:var(--gold);margin-left:4px">★</span>':''}<small>${l.email||''}</small></div></td>
+      <td>${l.phone?`<a href="tel:${l.phone}" onclick="e.stopPropagation()">${l.phone}</a>`:'—'}</td>
+      <td>${stateDisplay}</span></td>
+      <td>${src}</td>
+      <td><span class="stage-badge ${stage.cls}">${stage.label}</span></td>
+      <td>${l.webinarDate?`<span class="checkmark">✓</span> ${fmtDateShort(l.webinarDate)}`:'<span class="xmark">—</span>'}</td>
+      <td>${l.questionnaireDate?`<span class="checkmark">✓</span>`:'<span class="xmark">—</span>'}</td>
+      <td>${fuDisplay}</td>
+      <td style="color:var(--text3);font-size:12px">${lastAct?fmtDate(lastAct.date):'—'}</td>
+      <td><div class="action-btns">
+        ${l.phone?`<a href="tel:${l.phone}" class="btn btn-ghost btn-xs" onclick="event.stopPropagation()" title="Call">📞</a>`:''}
+        ${l.email?`<a href="mailto:${l.email}" class="btn btn-ghost btn-xs" onclick="event.stopPropagation()" title="Email">✉️</a>`:''}
+      </div></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('tc-leads').textContent = DB.leads.length;
+}
+
+function openAddLead(){
+  editingLeadId = null;
+  document.getElementById('modal-lead-title').textContent = 'Add Lead';
+  clearLeadForm();
+  openModal('modal-lead');
+}
+
+function clearLeadForm(){
+  ['ld-fname','ld-lname','ld-phone','ld-email','ld-aohub-id','ld-notes','ld-q1','ld-q2'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('ld-source').value='ao-hub';
+  document.getElementById('ld-stage').value='new';
+  document.getElementById('ld-priority').value='normal';
+  document.getElementById('ld-q3').value='';
+  document.getElementById('ld-webinar').value='';
+  document.getElementById('ld-quest').value='';
+  document.getElementById('ld-followup').value='';
+  document.getElementById('ld-state').value='';
+  document.getElementById('ld-quest-section').style.display='none';
+}
+
+function toggleQuestSection(){
+  const s=document.getElementById('ld-quest-section');
+  s.style.display=s.style.display==='none'?'block':'none';
+}
+
+function saveLead(){
+  const fname=document.getElementById('ld-fname').value.trim();
+  const lname=document.getElementById('ld-lname').value.trim();
+  if(!fname||!lname){showToast('Please enter first and last name','error');return;}
+  const lead = {
+    id: editingLeadId||uuid(),
+    firstName:fname, lastName:lname,
+    phone:document.getElementById('ld-phone').value.trim(),
+    email:document.getElementById('ld-email').value.trim(),
+    state:document.getElementById('ld-state').value,
+    source:document.getElementById('ld-source').value,
+    aoHubId:document.getElementById('ld-aohub-id').value.trim(),
+    stage:document.getElementById('ld-stage').value,
+    priority:document.getElementById('ld-priority').value,
+    webinarDate:document.getElementById('ld-webinar').value,
+    questionnaireDate:document.getElementById('ld-quest').value,
+    followUpDate:document.getElementById('ld-followup').value,
+    notes:document.getElementById('ld-notes').value.trim(),
+    questionnaireResponses:{
+      standOut:document.getElementById('ld-q1').value.trim(),
+      whyGoodFit:document.getElementById('ld-q2').value.trim(),
+      willingToInvest:document.getElementById('ld-q3').value
+    },
+    dateAdded: editingLeadId ? (DB.leads.find(l=>l.id===editingLeadId)?.dateAdded||new Date().toISOString()) : new Date().toISOString()
+  };
+  if(editingLeadId){
+    const idx=DB.leads.findIndex(l=>l.id===editingLeadId);
+    if(idx>-1) DB.leads[idx]=lead;
+    showToast('Lead updated','success');
+  } else {
+    DB.leads.push(lead);
+    if(!DB.activities[lead.id]) DB.activities[lead.id]=[];
+    showToast('Lead added','success');
+  }
+  saveDB();
+  closeModal('modal-lead');
+  renderLeads();
+  renderDashboard();
+}
+
+function openLeadDetail(id){
+  currentLeadId = id;
+  const l = DB.leads.find(x=>x.id===id);
+  if(!l) return;
+  const st = STATES.find(s=>s.abbr===l.state);
+  document.getElementById('detail-name').textContent = `${l.firstName} ${l.lastName}`;
+  document.getElementById('detail-meta').textContent = `${l.source==='ao-hub'?'AO Hub Lead':'Personal Funnel/Referral'} · Added ${fmtDate(l.dateAdded)}${l.aoHubId?' · AO Hub #'+l.aoHubId:''}`;
+
+  // Actions
+  const actDiv = document.getElementById('detail-actions');
+  const emailSubj = encodeURIComponent('AO Globe Life — Next Steps for You');
+  const emailBody = encodeURIComponent(`Hi ${l.firstName},\n\nThank you for your interest in AO Globe Life...`);
+  actDiv.innerHTML = `
+    ${l.phone?`<a href="tel:${l.phone}" class="btn btn-outline btn-sm">📞 Call ${l.phone}</a>`:''}
+    ${l.phone?`<a href="sms:${l.phone}" class="btn btn-outline btn-sm">💬 Text</a>`:''}
+    ${l.email?`<a href="mailto:${l.email}?subject=${emailSubj}&body=${emailBody}" class="btn btn-outline btn-sm">✉️ Email</a>`:''}
+    ${l.aoHubId?`<a href="https://aointerview.com/hub/applicant/${l.aoHubId}" target="_blank" class="btn btn-outline btn-sm">🔗 AO Hub</a>`:''}`;
+
+  // Info
+  const licensed = l.state && DB.licenses.includes(l.state);
+  const infoDiv = document.getElementById('detail-info');
+  infoDiv.innerHTML = `
+    <div style="background:var(--bg3);padding:10px;border-radius:var(--radius)"><div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">State</div><div style="font-size:15px;font-weight:700;color:${licensed?'var(--success)':'var(--danger)'}">${st?st.name:l.state||'Unknown'} ${!licensed&&l.state?'⚠️':''}</div>${!licensed&&l.state?'<div style="font-size:10px;color:var(--danger)">You need a license here</div>':licensed?'<div style="font-size:10px;color:var(--success)">You are licensed ✓</div>':''}</div>
+    <div style="background:var(--bg3);padding:10px;border-radius:var(--radius)"><div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">Webinar</div><div style="font-size:13px">${l.webinarDate?'✅ '+fmtDateShort(l.webinarDate):'Not completed'}</div></div>
+    <div style="background:var(--bg3);padding:10px;border-radius:var(--radius)"><div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">Questionnaire</div><div style="font-size:13px">${l.questionnaireDate?'✅ '+fmtDateShort(l.questionnaireDate):'Not completed'}</div></div>`;
+
+  // Stage selector
+  const stageEl = document.getElementById('detail-stage');
+  stageEl.innerHTML = STAGES.map(s=>`<option value="${s.id}" ${l.stage===s.id?'selected':''}>${s.label}</option>`).join('');
+
+  // Followup
+  document.getElementById('detail-followup').value = l.followUpDate||'';
+
+  // Activities
+  renderDetailActivities(id);
+
+  // Q&A
+  const qa = l.questionnaireResponses;
+  const qaDiv = document.getElementById('detail-qa');
+  if(qa&&(qa.standOut||qa.whyGoodFit||qa.willingToInvest)){
+    qaDiv.innerHTML = `
+      <hr class="divider">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600;margin-bottom:10px;font-family:'Barlow Condensed',sans-serif">Questionnaire Responses</div>
+      ${qa.standOut?`<div style="margin-bottom:8px"><div style="font-size:11px;color:var(--gold);margin-bottom:3px">What stood out most?</div><div style="font-size:13px;color:var(--text2)">${qa.standOut}</div></div>`:''}
+      ${qa.whyGoodFit?`<div style="margin-bottom:8px"><div style="font-size:11px;color:var(--gold);margin-bottom:3px">Why a good fit?</div><div style="font-size:13px;color:var(--text2)">${qa.whyGoodFit}</div></div>`:''}
+      ${qa.willingToInvest?`<div><div style="font-size:11px;color:var(--gold);margin-bottom:3px">Willing to invest in licensing?</div><div style="font-size:13px;color:${qa.willingToInvest==='yes'?'var(--success)':'var(--danger)'};font-weight:600">${qa.willingToInvest==='yes'?'Yes ✓':'No ✗'}</div></div>`:''}
+    `;
+  } else { qaDiv.innerHTML=''; }
+
+  // Licensing info
+  const licDiv = document.getElementById('detail-licensing');
+  if(l.stage==='decision'||l.stage==='enrolled'||l.stage==='licensed'){
+    licDiv.innerHTML = `
+      <hr class="divider">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600;margin-bottom:10px;font-family:'Barlow Condensed',sans-serif">Licensing Status</div>
+      <div class="form-grid">
+        <div class="form-row"><label>Licensing Decision</label>
+          <select onchange="updateLicensingField('${id}','licensingDecision',this.value)">
+            <option value="">Pending</option>
+            <option value="yes" ${l.licensingDecision==='yes'?'selected':''}>Yes — Will get licensed</option>
+            <option value="no" ${l.licensingDecision==='no'?'selected':''}>No — Declined</option>
+          </select>
+        </div>
+        <div class="form-row"><label>Pre-Licensing Enrolled Date</label>
+          <input type="date" value="${l.preEnrollmentDate||''}" onchange="updateLicensingField('${id}','preEnrollmentDate',this.value)">
+        </div>
+        <div class="form-row"><label>License Obtained Date</label>
+          <input type="date" value="${l.licenseObtainedDate||''}" onchange="updateLicensingField('${id}','licenseObtainedDate',this.value)">
+        </div>
+        <div class="form-row"><label>Compensation Credited</label>
+          <select onchange="updateLicensingField('${id}','compensationCredited',this.value==='true')">
+            <option value="false" ${!l.compensationCredited?'selected':''}>Not yet</option>
+            <option value="true" ${l.compensationCredited?'selected':''}>Yes ✓</option>
+          </select>
+        </div>
+      </div>`;
+  } else { licDiv.innerHTML=''; }
+
+  openModal('modal-detail');
+}
+
+function renderDetailActivities(id){
+  const acts = (DB.activities[id]||[]).slice().reverse();
+  const el = document.getElementById('detail-activity-log');
+  if(!acts.length){ el.innerHTML='<div class="no-alerts" style="padding:16px">No activity logged yet</div>'; return; }
+  el.innerHTML = acts.map(a=>`
+    <div class="activity-item">
+      <div class="activity-icon act-${a.type}">${a.type==='call'?'📞':a.type==='text'?'💬':a.type==='email'?'✉️':'📝'}</div>
+      <div class="activity-body">
+        <div class="activity-meta">${fmtDate(a.date)} &nbsp;·&nbsp; ${capFirst(a.type)}${a.outcome?' — '+a.outcome.replace(/-/g,' '):''}</div>
+        <div class="activity-desc">${a.notes||'—'}</div>
+      </div>
+    </div>`).join('');
+}
+
+function updateLeadStage(){
+  if(!currentLeadId) return;
+  const val = document.getElementById('detail-stage').value;
+  const l = DB.leads.find(x=>x.id===currentLeadId);
+  if(l){ l.stage=val; saveDB(); renderDashboard(); showToast('Stage updated','success');
+    // Show licensing section if moved to decision+
+    if(val==='decision'||val==='enrolled'||val==='licensed'){ openLeadDetail(currentLeadId); }
+  }
+}
+function updateFollowup(){
+  if(!currentLeadId) return;
+  const val = document.getElementById('detail-followup').value;
+  const l = DB.leads.find(x=>x.id===currentLeadId);
+  if(l){ l.followUpDate=val; saveDB(); showToast('Follow-up date saved','success'); }
+}
+function updateLicensingField(id,field,val){
+  const l=DB.leads.find(x=>x.id===id); if(!l) return;
+  l[field]=val; saveDB();
+  if(field==='licenseObtainedDate'&&val){ l.stage='licensed'; renderDashboard(); }
+  showToast('Saved','success');
+}
+function editCurrentLead(){
+  if(!currentLeadId) return;
+  const l=DB.leads.find(x=>x.id===currentLeadId); if(!l) return;
+  editingLeadId=currentLeadId;
+  document.getElementById('modal-lead-title').textContent='Edit Lead';
+  document.getElementById('ld-fname').value=l.firstName;
+  document.getElementById('ld-lname').value=l.lastName;
+  document.getElementById('ld-phone').value=l.phone||'';
+  document.getElementById('ld-email').value=l.email||'';
+  document.getElementById('ld-state').value=l.state||'';
+  document.getElementById('ld-source').value=l.source||'ao-hub';
+  document.getElementById('ld-aohub-id').value=l.aoHubId||'';
+  document.getElementById('ld-stage').value=l.stage||'new';
+  document.getElementById('ld-priority').value=l.priority||'normal';
+  document.getElementById('ld-webinar').value=l.webinarDate||'';
+  document.getElementById('ld-quest').value=l.questionnaireDate||'';
+  document.getElementById('ld-followup').value=l.followUpDate||'';
+  document.getElementById('ld-notes').value=l.notes||'';
+  if(l.questionnaireResponses){
+    document.getElementById('ld-q1').value=l.questionnaireResponses.standOut||'';
+    document.getElementById('ld-q2').value=l.questionnaireResponses.whyGoodFit||'';
+    document.getElementById('ld-q3').value=l.questionnaireResponses.willingToInvest||'';
+    document.getElementById('ld-quest-section').style.display='block';
+  }
+  closeModal('modal-detail');
+  openModal('modal-lead');
+}
+function deleteCurrentLead(){
+  if(!currentLeadId) return;
+  if(!confirm('Delete this lead? This cannot be undone.')) return;
+  DB.leads=DB.leads.filter(l=>l.id!==currentLeadId);
+  delete DB.activities[currentLeadId];
+  saveDB(); closeModal('modal-detail');
+  renderLeads(); renderDashboard();
+  showToast('Lead deleted','info');
+}
+
+// Activity logging
+let activityLeadId = null;
+function logActivity(type){
+  activityLeadId = currentLeadId;
+  const titles={call:'Log Call',text:'Log Text/SMS',email:'Log Email',note:'Add Note'};
+  document.getElementById('activity-modal-title').textContent=titles[type]||'Log Activity';
+  document.getElementById('act-type').value=type;
+  document.getElementById('act-outcome-row').style.display=type==='note'?'none':'block';
+  const now=new Date(); const pad=n=>n.toString().padStart(2,'0');
+  document.getElementById('act-date').value=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  document.getElementById('act-notes').value='';
+  openModal('modal-activity');
+}
+function saveActivity(){
+  const type=document.getElementById('act-type').value;
+  const date=document.getElementById('act-date').value;
+  const outcome=document.getElementById('act-outcome').value;
+  const notes=document.getElementById('act-notes').value.trim();
+  if(!activityLeadId) return;
+  if(!DB.activities[activityLeadId]) DB.activities[activityLeadId]=[];
+  DB.activities[activityLeadId].push({id:uuid(),type,date,outcome,notes,createdAt:new Date().toISOString()});
+  saveDB(); closeModal('modal-activity');
+  renderDetailActivities(activityLeadId);
+  renderDashboard();
+  showToast(capFirst(type)+' logged','success');
+}
+
+// CSV Import
+function importCSV(){
+  document.getElementById('csv-file-input').click();
+}
+function handleCSVUpload(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const text=ev.target.result;
+    const lines=text.split('\n').filter(l=>l.trim());
+    if(!lines.length){ showToast('Empty file','error'); return; }
+    const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim().toLowerCase());
+    let added=0;
+    for(let i=1;i<lines.length;i++){
+      const cols=lines[i].split(',').map(c=>c.replace(/"/g,'').trim());
+      const row={};
+      headers.forEach((h,idx)=>row[h]=cols[idx]||'');
+      // Parse AO Hub format: "Last, First" or "First Last"
+      let fname='',lname='';
+      const nameRaw=row['name']||row['full name']||'';
+      if(nameRaw.includes(',')){
+        const parts=nameRaw.split(',');
+        lname=parts[0].trim(); fname=parts[1]?.trim()||'';
+      } else {
+        const parts=nameRaw.split(' ');
+        fname=parts[0]||''; lname=parts.slice(1).join(' ')||'';
+      }
+      if(!fname&&!lname) continue;
+      // Parse state from "US / California" or "California" or "CA"
+      const locRaw=row['location']||row['state']||'';
+      let stateAbbr='';
+      if(locRaw.includes('/')){
+        const stateRaw=locRaw.split('/').pop().trim();
+        const st=STATES.find(s=>s.name.toLowerCase()===stateRaw.toLowerCase()||s.abbr.toLowerCase()===stateRaw.toLowerCase());
+        stateAbbr=st?st.abbr:'';
+      } else {
+        const st=STATES.find(s=>s.name.toLowerCase()===locRaw.toLowerCase()||s.abbr.toLowerCase()===locRaw.toLowerCase());
+        stateAbbr=st?st.abbr:'';
+      }
+      // Check duplicate
+      const dup=DB.leads.find(l=>l.firstName.toLowerCase()===fname.toLowerCase()&&l.lastName.toLowerCase()===lname.toLowerCase());
+      if(dup) continue;
+      const lead={
+        id:uuid(),firstName:fname,lastName:lname,phone:'',email:'',
+        state:stateAbbr,source:'ao-hub',aoHubId:'',stage:'new',priority:'normal',
+        webinarDate:row['completed webinar']||row['webinar']||'',
+        questionnaireDate:row['completed questionnaire']||row['questionnaire']||'',
+        followUpDate:'',notes:'',questionnaireResponses:{standOut:'',whyGoodFit:'',willingToInvest:''},
+        dateAdded:new Date().toISOString()
+      };
+      DB.leads.push(lead);
+      if(!DB.activities[lead.id]) DB.activities[lead.id]=[];
+      added++;
+    }
+    saveDB(); renderLeads(); renderDashboard();
+    showToast(`Imported ${added} leads from AO Hub`,'success');
+    e.target.value='';
+  };
+  reader.readAsText(file);
+}
+
+// ============================================================
+// INTERVIEWS
+// ============================================================
+function openScheduleInterview(){
+  const sel=document.getElementById('int-lead-id');
+  sel.innerHTML='<option value="">Select lead...</option>'+
+    DB.leads.filter(l=>l.stage==='connected'||l.stage==='scheduled').map(l=>`<option value="${l.id}">${l.firstName} ${l.lastName}</option>`).join('');
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('int-date').value=today;
+  document.getElementById('int-time').value='18:00';
+  document.getElementById('int-notes').value='';
+  document.getElementById('int-zoom').value='';
+  openModal('modal-interview');
+}
+function saveInterview(){
+  const leadId=document.getElementById('int-lead-id').value;
+  const date=document.getElementById('int-date').value;
+  const time=document.getElementById('int-time').value;
+  const type=document.getElementById('int-type').value;
+  if(!date){ showToast('Please select a date','error'); return; }
+  const interview={
+    id:uuid(),leadId,date,time,type,
+    zoom:document.getElementById('int-zoom').value,
+    notes:document.getElementById('int-notes').value,
+    outcome:'pending',
+    createdAt:new Date().toISOString()
+  };
+  DB.interviews.push(interview);
+  if(leadId){ const l=DB.leads.find(x=>x.id===leadId); if(l){ l.stage='scheduled'; } }
+  saveDB(); closeModal('modal-interview');
+  renderInterviews(); renderDashboard();
+  showToast('Interview scheduled','success');
+}
+function renderInterviews(){
+  const today=new Date().toISOString().split('T')[0];
+  const upcoming=DB.interviews.filter(i=>i.date>=today&&(!i.outcome||i.outcome==='pending'));
+  const past=DB.interviews.filter(i=>i.date<today||( i.outcome&&i.outcome!=='pending'));
+  const el1=document.getElementById('upcoming-interviews');
+  const el2=document.getElementById('past-interviews');
+  if(!upcoming.length){ el1.innerHTML='<div class="empty-state"><div class="empty-icon">📅</div><h3>No upcoming interviews</h3></div>'; }
+  else el1.innerHTML=upcoming.sort((a,b)=>a.date.localeCompare(b.date)).map(i=>interviewCard(i,false)).join('');
+  if(!past.length){ el2.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><h3>No completed interviews yet</h3></div>'; }
+  else el2.innerHTML=past.sort((a,b)=>b.date.localeCompare(a.date)).map(i=>interviewCard(i,true)).join('');
+  document.getElementById('tc-interviews').textContent=upcoming.length;
+}
+function interviewCard(i,isPast){
+  const lead=DB.leads.find(l=>l.id===i.leadId);
+  const name=lead?`${lead.firstName} ${lead.lastName}`:'Lead not found';
+  const d=new Date(i.date+'T00:00:00');
+  const month=d.toLocaleString('en-US',{month:'short'}).toUpperCase();
+  const day=d.getDate();
+  return `<div class="interview-card">
+    <div class="interview-date-box"><div class="interview-date-month">${month}</div><div class="interview-date-day">${day}</div></div>
+    <div class="interview-info">
+      <div class="interview-name">${name}</div>
+      <div class="interview-meta">${i.time||''} &nbsp;·&nbsp; <span class="type-badge type-${i.type}">${i.type==='group'?'Group Final':'1-on-1'}</span>${i.zoom?` &nbsp;·&nbsp; <a href="${i.zoom}" target="_blank">Join Zoom</a>`:''}</div>
+      ${i.notes?`<div style="font-size:11px;color:var(--text3);margin-top:4px">${i.notes}</div>`:''}
+    </div>
+    ${isPast?`<select onchange="updateInterviewOutcome('${i.id}',this.value)" style="width:auto;min-width:130px" onclick="event.stopPropagation()">
+      <option value="pending" ${i.outcome==='pending'?'selected':''}>Pending</option>
+      <option value="attended" ${i.outcome==='attended'?'selected':''}>✅ Attended</option>
+      <option value="no-show" ${i.outcome==='no-show'?'selected':''}>❌ No Show</option>
+      <option value="rescheduled" ${i.outcome==='rescheduled'?'selected':''}>🔄 Reschedule</option>
+    </select>`:`<button class="btn btn-outline btn-sm" onclick="updateInterviewOutcome('${i.id}','attended')">Mark Complete</button>`}
+  </div>`;
+}
+function updateInterviewOutcome(id,outcome){
+  const i=DB.interviews.find(x=>x.id===id); if(!i) return;
+  i.outcome=outcome;
+  if(outcome==='attended'&&i.leadId){
+    const l=DB.leads.find(x=>x.id===i.leadId);
+    if(l) l.stage='interviewed';
+  }
+  saveDB(); renderInterviews(); renderDashboard();
+  showToast('Interview updated','success');
+}
+
+// ============================================================
+// TRAINING
+// ============================================================
+function renderTraining(){
+  const enrollees=DB.leads.filter(l=>['decision','enrolled','licensed'].includes(l.stage));
+  const el=document.getElementById('training-list');
+  if(!enrollees.length){ el.innerHTML='<div class="empty-state"><div class="empty-icon">🎓</div><h3>No enrollments yet</h3></div>'; return; }
+  let totalComp=0;
+  el.innerHTML=enrollees.map(l=>{
+    const st=STATES.find(s=>s.abbr===l.state);
+    const licensed=l.state&&DB.licenses.includes(l.state);
+    if(l.compensationCredited) totalComp++;
+    return `<div class="enrollment-card">
+      <div class="enrollment-header">
+        <div>
+          <div class="enrollment-name">${l.firstName} ${l.lastName}</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">${st?st.name:l.state||'Unknown state'} ${!licensed&&l.state?'<span style="color:var(--danger)">⚠️ You need license here</span>':''}</div>
+        </div>
+        <span class="stage-badge stage-${l.stage}">${STAGES.find(s=>s.id===l.stage)?.label||l.stage}</span>
+      </div>
+      <div class="enrollment-steps">
+        <span class="enroll-step ${l.licensingDecision==='yes'?'step-done':'step-pending'}">Said Yes ${l.licensingDecision==='yes'?'✓':''}</span>
+        <span style="color:var(--text3)">→</span>
+        <span class="enroll-step ${l.preEnrollmentDate?'step-done':'step-active'}">Pre-Lic Enrolled ${l.preEnrollmentDate?'✓':''}</span>
+        <span style="color:var(--text3)">→</span>
+        <span class="enroll-step ${l.licenseObtainedDate?'step-done':'step-pending'}">Licensed ${l.licenseObtainedDate?'✓':''}</span>
+        <span style="color:var(--text3)">→</span>
+        <span class="enroll-step ${l.compensationCredited?'step-done':'step-pending'}">Comp Credited ${l.compensationCredited?'✓':''}</span>
+      </div>
+      ${l.preEnrollmentDate?`<div style="font-size:11px;color:var(--text3);margin-top:6px">Enrolled: ${fmtDateShort(l.preEnrollmentDate)}${l.licenseObtainedDate?' &nbsp;·&nbsp; Licensed: '+fmtDateShort(l.licenseObtainedDate):''}</div>`:''}
+      <div style="margin-top:8px"><button class="btn btn-outline btn-xs" onclick="openLeadDetail('${l.id}')">View Details</button></div>
+    </div>`;
+  }).join('');
+  document.getElementById('comp-total').textContent = totalComp + ' leads';
+  document.getElementById('tc-training').textContent = enrollees.length;
+}
+
+// ============================================================
+// LICENSES
+// ============================================================
+function renderLicenses(){
+  const grid=document.getElementById('state-grid');
+  const recruitStates=[...new Set(DB.leads.map(l=>l.state).filter(Boolean))];
+  grid.innerHTML=STATES.map(s=>{
+    const isLicensed=DB.licenses.includes(s.abbr);
+    const hasRecruit=recruitStates.includes(s.abbr);
+    const needsLicense=hasRecruit&&!isLicensed;
+    return `<div class="state-item ${isLicensed?'licensed':''} ${needsLicense?'needs-license':''}" onclick="toggleLicense('${s.abbr}')">
+      <div class="state-check">${isLicensed?'✓':''}</div>
+      <div><div class="state-name-abbr">${s.abbr}</div><div class="state-name-full">${s.name}</div>${needsLicense?'<div class="state-alert">Has recruit!</div>':''}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('lic-count').textContent=DB.licenses.length;
+  const unlicensedRecruit=recruitStates.filter(s=>!DB.licenses.includes(s)).length;
+  const alertEl=document.getElementById('lic-alert-count');
+  const alertNum=document.getElementById('lic-alert-num');
+  alertEl.style.display=unlicensedRecruit>0?'block':'none';
+  alertNum.textContent=unlicensedRecruit;
+}
+function toggleLicense(abbr){
+  if(DB.licenses.includes(abbr)){ DB.licenses=DB.licenses.filter(s=>s!==abbr); }
+  else { DB.licenses.push(abbr); }
+  saveDB(); renderLicenses(); renderDashboard();
+}
+
+// ============================================================
+// PRODUCTION
+// ============================================================
+function openAddSale(){
+  document.getElementById('sale-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('sale-client').value='';
+  document.getElementById('sale-alp').value='';
+  document.getElementById('sale-comm').value='65';
+  document.getElementById('sale-notes').value='';
+  document.getElementById('sale-preview').textContent='$0.00';
+  openModal('modal-sale');
+}
+document.addEventListener('input',function(e){
+  if(e.target.id==='sale-alp'||e.target.id==='sale-comm'){
+    const alp=parseFloat(document.getElementById('sale-alp').value)||0;
+    const comm=parseFloat(document.getElementById('sale-comm').value)||0;
+    document.getElementById('sale-preview').textContent='$'+(alp*(comm/100)).toFixed(2);
+  }
+});
+function saveSale(){
+  const client=document.getElementById('sale-client').value.trim();
+  const alp=parseFloat(document.getElementById('sale-alp').value)||0;
+  if(!client){ showToast('Please enter client name','error'); return; }
+  if(!alp){ showToast('Please enter ALP amount','error'); return; }
+  const comm=parseFloat(document.getElementById('sale-comm').value)||65;
+  const sale={
+    id:uuid(),
+    date:document.getElementById('sale-date').value,
+    client,
+    product:document.getElementById('sale-product').value,
+    state:document.getElementById('sale-state').value,
+    alp,
+    commissionRate:comm,
+    commission:alp*(comm/100),
+    notes:document.getElementById('sale-notes').value.trim(),
+    createdAt:new Date().toISOString()
+  };
+  DB.production.push(sale);
+  saveDB(); closeModal('modal-sale');
+  renderProduction();
+  showToast('Sale logged','success');
+}
+function renderProduction(){
+  const sales=DB.production.sort((a,b)=>b.date.localeCompare(a.date));
+  const totalALP=sales.reduce((s,x)=>s+x.alp,0);
+  const totalComm=sales.reduce((s,x)=>s+x.commission,0);
+  const thisMonth=new Date().toISOString().slice(0,7);
+  const monthSales=sales.filter(s=>s.date.startsWith(thisMonth));
+  const monthComm=monthSales.reduce((s,x)=>s+x.commission,0);
+  const summary=document.getElementById('prod-summary');
+  summary.innerHTML=`
+    <div class="prod-stat"><div class="prod-stat-val">${sales.length}</div><div class="prod-stat-label">Total Sales</div></div>
+    <div class="prod-stat"><div class="prod-stat-val">$${totalALP.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}</div><div class="prod-stat-label">Total ALP</div></div>
+    <div class="prod-stat"><div class="prod-stat-val">$${totalComm.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}</div><div class="prod-stat-label">Total Est. Commission</div></div>
+    <div class="prod-stat"><div class="prod-stat-val" style="color:var(--success)">$${monthComm.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}</div><div class="prod-stat-label">This Month</div></div>`;
+  const tbody=document.getElementById('prod-tbody');
+  if(!sales.length){ tbody.innerHTML=`<tr><td colspan="9"><div class="empty-state"><div class="empty-icon">💰</div><h3>No sales logged yet</h3></div></td></tr>`; return; }
+  tbody.innerHTML=sales.map(s=>`
+    <tr>
+      <td>${fmtDateShort(s.date)}</td>
+      <td><strong>${s.client}</strong></td>
+      <td style="font-size:12px">${s.product}</td>
+      <td>${s.state||'—'}</td>
+      <td>$${s.alp.toFixed(2)}</td>
+      <td>${s.commissionRate}%</td>
+      <td style="color:var(--gold);font-weight:600">$${s.commission.toFixed(2)}</td>
+      <td style="font-size:12px;color:var(--text3)">${s.notes||'—'}</td>
+      <td><button class="btn btn-ghost btn-xs" onclick="deleteSale('${s.id}')">🗑</button></td>
+    </tr>`).join('');
+}
+function deleteSale(id){
+  if(!confirm('Delete this sale record?')) return;
+  DB.production=DB.production.filter(s=>s.id!==id);
+  saveDB(); renderProduction();
+  showToast('Sale removed','info');
+}
+
+// ============================================================
+// SCRIPT
+// ============================================================
+document.getElementById('sc-name')?.addEventListener('input',function(){
+  ['sc-name-display','sc-name-display2','sc-name-display3','sc-name-display4'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.textContent=this.value||'[Name]';
+  });
+});
+document.getElementById('sc-state')?.addEventListener('input',function(){
+  const el=document.getElementById('sc-state-display'); if(el) el.textContent=this.value||'[State]';
+});
+document.getElementById('sc-type')?.addEventListener('change',function(){
+  document.getElementById('close-group').style.display=this.value==='group'?'block':'none';
+  document.getElementById('close-1on1').style.display=this.value==='1on1'?'block':'none';
+});
+document.querySelectorAll('.script-check-item input[type=checkbox]').forEach(cb=>{
+  cb.addEventListener('change',function(){
+    this.closest('.script-check-item').classList.toggle('checked',this.checked);
+  });
+});
+function resetScript(){
+  document.querySelectorAll('.script-check-item input[type=checkbox]').forEach(cb=>{
+    cb.checked=false; cb.closest('.script-check-item').classList.remove('checked');
+  });
+  ['sc-name','sc-phone','sc-email','sc-date','sc-state','sc-notes'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  ['sc-name-display','sc-name-display2','sc-name-display3','sc-name-display4'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.textContent='[Name]';
+  });
+  const sd=document.getElementById('sc-state-display'); if(sd) sd.textContent='[State]';
+  showToast('Script reset','info');
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function loadSettings(){
+  document.getElementById('set-name').value=DB.settings.name||'';
+  document.getElementById('set-email').value=DB.settings.email||'';
+  document.getElementById('set-phone').value=DB.settings.phone||'';
+  document.getElementById('set-calendly').value=DB.settings.calendly||'';
+}
+function saveSettings(){
+  DB.settings.name=document.getElementById('set-name').value.trim();
+  DB.settings.email=document.getElementById('set-email').value.trim();
+  DB.settings.phone=document.getElementById('set-phone').value.trim();
+  DB.settings.calendly=document.getElementById('set-calendly').value.trim();
+  saveDB();
+  document.getElementById('hdr-name').textContent=DB.settings.name;
+  document.getElementById('dash-name').textContent=DB.settings.name.split(' ')[0];
+  showToast('Settings saved','success');
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`AO_CRM_Backup_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  showToast('Data exported','success');
+}
+function importData(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      DB=JSON.parse(ev.target.result);
+      saveDB(); renderDashboard(); renderLeads();
+      showToast('Data imported successfully','success');
+    }catch(err){ showToast('Invalid file format','error'); }
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
+function clearAllData(){
+  if(!confirm('⚠️ This will delete ALL your CRM data. Are you sure?\n\nExport a backup first if needed.')) return;
+  DB={leads:[],activities:{},interviews:[],production:[],licenses:[],settings:{name:'Slade Smiley',email:'sladeSmiley@aoglobelife.vip',phone:'818-521-8497',calendly:''}};
+  saveDB(); renderDashboard(); renderLeads();
+  showToast('All data cleared','info');
+}
+
+// ============================================================
+// MODAL HELPERS
+// ============================================================
+function openModal(id){
+  document.getElementById(id)?.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(id){
+  document.getElementById(id)?.classList.remove('open');
+  document.body.style.overflow='';
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay=>{
+  overlay.addEventListener('click',function(e){
+    if(e.target===this) closeModal(this.id);
+  });
+});
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg,type='info'){
+  const container=document.getElementById('toast-container');
+  const toast=document.createElement('div');
+  toast.className=`toast ${type}`;
+  toast.innerHTML=`<span>${type==='success'?'✅':type==='error'?'❌':'ℹ️'}</span> ${msg}`;
+  container.appendChild(toast);
+  setTimeout(()=>toast.remove(),3000);
+}
+
+// ============================================================
+// UTILITY
+// ============================================================
+function fmtDate(dateStr){
+  if(!dateStr) return '—';
+  try{
+    const d=new Date(dateStr);
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  }catch{return dateStr;}
+}
+function fmtDateShort(dateStr){
+  if(!dateStr) return '—';
+  try{
+    const d=new Date(dateStr+'T00:00:00');
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  }catch{return dateStr;}
+}
+function capFirst(s){ return s?s.charAt(0).toUpperCase()+s.slice(1):s; }
+
+// ============================================================
+// POPULATE DROPDOWNS
+// ============================================================
+function populateAllStateDropdowns(){
+  const ids=['ld-state','sale-state'];
+  ids.forEach(id=>{
+    const sel=document.getElementById(id);
+    if(!sel) return;
+    sel.innerHTML='<option value="">Select state...</option>'+
+      STATES.map(s=>`<option value="${s.abbr}">${s.name}</option>`).join('');
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init(){
+  loadDB();
+  populateAllStateDropdowns();
+  document.getElementById('dash-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('dash-name').textContent=DB.settings.name.split(' ')[0];
+  document.getElementById('hdr-name').textContent=DB.settings.name;
+  renderDashboard();
+}
+init();
+</script>
+</body>
+</html>
