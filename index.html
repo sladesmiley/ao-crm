@@ -320,6 +320,10 @@ tr:hover td{background:var(--card2);cursor:pointer}
     </div>
   </div>
   <div class="header-right">
+    <div id="sync-status" style="display:flex;align-items:center;gap:6px;padding:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;cursor:pointer" onclick="switchTab('settings')" title="Cloud sync status">
+      <div id="sync-dot" style="width:8px;height:8px;border-radius:50%;background:var(--text3);transition:background .3s"></div>
+      <span id="sync-label" style="font-size:11px;color:var(--text3);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.04em">Local only</span>
+    </div>
     <div class="header-agent">
       <div class="header-agent-name" id="hdr-name">Slade Smiley</div>
       <div class="header-agent-role">Regional Producer</div>
@@ -605,7 +609,21 @@ tr:hover td{background:var(--card2);cursor:pointer}
     </div>
   </div>
   <div class="settings-section">
-    <div class="settings-section-title">Data Management</div>
+    <div class="settings-section-title">☁️ Cloud Sync (Supabase)</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.6">
+      Connect to Supabase so your data is stored in the cloud — safe from browser cache clears, accessible from any device. Enter your credentials once per device.
+    </div>
+    <div class="form-grid">
+      <div class="form-row"><label>Supabase Project URL</label><input type="text" id="set-sb-url" placeholder="https://xxxxx.supabase.co"></div>
+      <div class="form-row"><label>Supabase Anon Key</label><input type="text" id="set-sb-key" placeholder="eyJhbGci..."></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px;align-items:center">
+      <button class="btn btn-gold btn-sm" onclick="saveSupabaseSettings()">Connect to Cloud</button>
+      <button class="btn btn-outline btn-sm" onclick="testCloudConnection()">Test Connection</button>
+      <button class="btn btn-outline btn-sm" onclick="forcePushToCloud()">⬆ Push Local Data to Cloud</button>
+      <span id="sb-status" style="font-size:12px;color:var(--text3)"></span>
+    </div>
+  </div>
     <div class="data-actions">
       <button class="btn btn-outline btn-sm" onclick="exportData()">⬇ Export All Data (JSON)</button>
       <label class="btn btn-outline btn-sm" style="cursor:pointer">⬆ Import Data (JSON)<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
@@ -898,6 +916,7 @@ function loadDB(){
 }
 function saveDB(){
   localStorage.setItem('ao_crm_data', JSON.stringify(DB));
+  cloudSave();
 }
 function uuid(){
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{
@@ -1719,6 +1738,11 @@ function loadSettings(){
   document.getElementById('set-email').value=DB.settings.email||'';
   document.getElementById('set-phone').value=DB.settings.phone||'';
   document.getElementById('set-calendly').value=DB.settings.calendly||'';
+  document.getElementById('set-sb-url').value=DB.settings.supabaseUrl||'';
+  document.getElementById('set-sb-key').value=DB.settings.supabaseKey||'';
+  const {url,key}=getCloudCreds();
+  const sbStatus=document.getElementById('sb-status');
+  if(sbStatus) sbStatus.textContent=url&&key?'Credentials saved':'Not connected';
 }
 function saveSettings(){
   DB.settings.name=document.getElementById('set-name').value.trim();
@@ -1820,15 +1844,131 @@ function populateAllStateDropdowns(){
 }
 
 // ============================================================
-// INIT
+// CLOUD SYNC — SUPABASE
 // ============================================================
-function init(){
+const CLOUD_ID = 'ao_crm_main';
+
+function getCloudCreds(){
+  return {
+    url: DB.settings.supabaseUrl||'',
+    key: DB.settings.supabaseKey||''
+  };
+}
+
+function setSyncStatus(status){
+  const dot=document.getElementById('sync-dot');
+  const label=document.getElementById('sync-label');
+  if(!dot||!label) return;
+  const map={
+    synced:{bg:'var(--success)',text:'Synced ✓'},
+    saving:{bg:'var(--gold)',text:'Saving...'},
+    error:{bg:'var(--danger)',text:'Sync error'},
+    local:{bg:'var(--text3)',text:'Local only'},
+    connecting:{bg:'var(--blue2)',text:'Connecting...'}
+  };
+  const s=map[status]||map.local;
+  dot.style.background=s.bg;
+  label.textContent=s.text;
+  label.style.color=s.bg;
+}
+
+async function cloudSave(){
+  const {url,key}=getCloudCreds();
+  if(!url||!key){ setSyncStatus('local'); return false; }
+  setSyncStatus('saving');
+  try{
+    const res=await fetch(`${url}/rest/v1/crm_data`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey':key,
+        'Authorization':'Bearer '+key,
+        'Prefer':'resolution=merge-duplicates'
+      },
+      body:JSON.stringify({id:CLOUD_ID,data:DB,updated_at:new Date().toISOString()})
+    });
+    if(res.ok){ setSyncStatus('synced'); return true; }
+    else{ setSyncStatus('error'); console.warn('Cloud save failed:',res.status); return false; }
+  }catch(e){ setSyncStatus('error'); console.warn('Cloud save error:',e); return false; }
+}
+
+async function cloudLoad(){
+  const {url,key}=getCloudCreds();
+  if(!url||!key) return null;
+  try{
+    const res=await fetch(`${url}/rest/v1/crm_data?id=eq.${CLOUD_ID}&select=data`,{
+      headers:{'apikey':key,'Authorization':'Bearer '+key}
+    });
+    if(res.ok){
+      const rows=await res.json();
+      if(rows&&rows.length>0&&rows[0].data) return rows[0].data;
+    }
+  }catch(e){ console.warn('Cloud load error:',e); }
+  return null;
+}
+
+async function saveSupabaseSettings(){
+  const url=document.getElementById('set-sb-url').value.trim().replace(/\/+$/,'');
+  const key=document.getElementById('set-sb-key').value.trim();
+  if(!url||!key){ showToast('Please enter both URL and key','error'); return; }
+  DB.settings.supabaseUrl=url;
+  DB.settings.supabaseKey=key;
+  localStorage.setItem('ao_crm_data',JSON.stringify(DB));
+  document.getElementById('sb-status').textContent='Connecting...';
+  setSyncStatus('connecting');
+  const ok=await cloudSave();
+  if(ok){
+    document.getElementById('sb-status').textContent='✅ Connected and synced!';
+    showToast('Cloud sync connected! Your data is now safe.','success');
+  } else {
+    document.getElementById('sb-status').textContent='❌ Connection failed — check credentials';
+    showToast('Connection failed — check your URL and key','error');
+  }
+}
+
+async function testCloudConnection(){
+  const {url,key}=getCloudCreds();
+  if(!url||!key){ showToast('No credentials saved yet','error'); return; }
+  document.getElementById('sb-status').textContent='Testing...';
+  const data=await cloudLoad();
+  if(data!==null){
+    document.getElementById('sb-status').textContent='✅ Connection working!';
+    showToast('Cloud connection is working','success');
+  } else {
+    document.getElementById('sb-status').textContent='❌ Could not connect';
+    showToast('Could not connect — check credentials','error');
+  }
+}
+
+async function forcePushToCloud(){
+  if(!confirm('Push all local data to cloud? This will overwrite your cloud data with what\'s currently in this browser.')) return;
+  const ok=await cloudSave();
+  if(ok) showToast('All data pushed to cloud successfully','success');
+  else showToast('Push failed — check your connection','error');
+}
+
+// ============================================================
+async function init(){
   loadDB();
   populateAllStateDropdowns();
   document.getElementById('dash-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('dash-name').textContent=DB.settings.name.split(' ')[0];
   document.getElementById('hdr-name').textContent=DB.settings.name;
   renderDashboard();
+  const {url,key}=getCloudCreds();
+  if(url&&key){
+    setSyncStatus('connecting');
+    cloudLoad().then(cloudData=>{
+      if(cloudData&&cloudData.leads&&cloudData.leads.length>=DB.leads.length){
+        DB=cloudData;
+        localStorage.setItem('ao_crm_data',JSON.stringify(DB));
+        renderDashboard(); renderLeads();
+      }
+      setSyncStatus('synced');
+    }).catch(()=>setSyncStatus('error'));
+  } else {
+    setSyncStatus('local');
+  }
 }
 init();
 </script>
